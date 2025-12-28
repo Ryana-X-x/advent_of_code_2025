@@ -2,6 +2,38 @@
 
 import java.io.* ;
 
+// public class Main {
+//     public static void main(String[] args) throws Exception {
+//         BufferedReader br = new BufferedReader(new InputStreamReader(System.in)) ;
+
+//         int position = 50 ;
+//         int zeroCount = 0 ;
+
+//         String line ;
+//         while ((line = br.readLine()) != null && ! line.isEmpty()) {
+//             char dir = line.charAt(0) ;
+//             int steps = Integer.parseInt(line.substring(1)) ;
+
+//             if (dir == 'L') {
+//                 position -= steps ;
+//             } else {
+//                 position += steps ;
+//             }
+
+//             position = ((position % 100) + 100 %  100) ;
+
+//             if (position == 0) {
+//                 zeroCount++ ;
+//             }
+//         }
+
+//         System.out.println(zeroCount);
+//     }
+// }
+
+
+// *********** Part 2 ***********
+
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in)) ;
@@ -10,20 +42,22 @@ public class Main {
         int zeroCount = 0 ;
 
         String line ;
-        while ((line = br.readLine()) != null && ! line.isEmpty()) {
+        while ((line = br.readLine()) != null && !line.isEmpty()) {
             char dir = line.charAt(0) ;
             int steps = Integer.parseInt(line.substring(1)) ;
 
-            if (dir == 'L') {
-                position -= steps ;
-            } else {
-                position += steps ;
-            }
+            for (int i = 0; i < steps; i++) {
+                if (dir == 'L') {
+                    position-- ;
+                } else {
+                    position++ ;
+                }
 
-            position = ((position % 100) + 100 %  100) ;
+                position = ((position % 100) + 100 % 100) ;
 
-            if (position == 0) {
-                zeroCount++ ;
+                if (position == 0) {
+                    zeroCount++ ;
+                }
             }
         }
 
