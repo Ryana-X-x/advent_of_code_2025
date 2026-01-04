@@ -7,7 +7,25 @@ public class Main {
 
         List<long[]> ranges = parseRanges(input) ;
 
-        System.out.println(ranges);
+        long max = maxValue(ranges) ;
+
+        // Use BigInteger to handle large sums (numbers can be up to 10 digits)
+        java.math.BigInteger total = java.math.BigInteger.ZERO ;
+        
+        for (int halfLen = 1; ; halfLen++) {
+            long minHalf = pow10(halfLen - 1) ;
+            long smallestDouble = createDoubleNumer(minHalf, halfLen) ;
+            if (smallestDouble > max) break ;
+
+            List<Long> doubles = generateDoubleNumber(halfLen, max) ;
+            for (Long d : doubles) {
+                if (isInRange(d, ranges)) {
+                    total = total.add(java.math.BigInteger.valueOf(d)) ;
+                }
+            }
+        }
+
+        System.out.println("Sum of invalid IDs: " + total) ;
                         
     }
 
@@ -26,21 +44,27 @@ public class Main {
     }
 
     private static long createDoubleNumer(long half, int halfLength) {
-        return half = half * (long) Math.pow(10, halfLength) + half ;
+        return half * pow10(halfLength) + half ;
+    }
+
+    private static long pow10(int exp) {
+        long r = 1L ;
+        for (int i = 0; i < exp; i++) r *= 10L ;
+        return r ;
     }
 
     private static List<Long> generateDoubleNumber(int halfLength, long maxValue) {
         List<Long> doubleNumber = new ArrayList<>() ; 
 
         // find the min half
-        long minHalf = (long) Math.pow(10, halfLength - 1) ;
+        long minHalf = pow10(halfLength - 1) ;
 
         long smallestDoubles = createDoubleNumer(minHalf, halfLength) ;
         if (smallestDoubles > maxValue) {
             return doubleNumber ;
         }
 
-        long maxHalf = (long) Math.pow(10, halfLength) - 1 ;
+        long maxHalf = pow10(halfLength) - 1 ;
         
         for(long half = minHalf; half <= maxHalf; half++) {
             long doubled = createDoubleNumer(half, halfLength) ;
